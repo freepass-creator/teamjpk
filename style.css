@@ -700,12 +700,13 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 18px 16px 18px 28px;
+  padding: 0 12px 0 28px;
+  height: 60px;
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
-  min-height: 60px;
-  box-sizing: border-box;
 }
+.drawer-head .ft-logo span { color: var(--text2); }
+.drawer-head .ft-logo b    { color: var(--navy); opacity: 0.8; }
 .drawer-close {
   display: flex;
   align-items: center;
