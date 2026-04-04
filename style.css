@@ -725,7 +725,6 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
 
 .drawer-nav {
   grid-row: 2;
-  padding: 12px 0;
   overflow-y: auto;
 }
 .drawer-link {
