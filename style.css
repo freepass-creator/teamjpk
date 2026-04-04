@@ -684,7 +684,7 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
   position: fixed;
   top: 0; right: 0;
   width: min(300px, 82vw);
-  height: 100dvh;          /* bottom:0 대신 명시적 높이 — overflow-x:hidden 버그 우회 */
+  height: 100dvh;
   background: #F8F7F5;
   border-left: 1px solid var(--line);
   box-shadow: -12px 0 48px rgba(0, 0, 0, 0.22);
@@ -693,7 +693,6 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
   z-index: 200;
   display: flex;
   flex-direction: column;
-  padding: 0 0 40px;
 }
 .nav-drawer.open { transform: translateX(0); }
 
@@ -701,9 +700,11 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px 24px 20px 32px;
+  padding: 18px 16px 18px 28px;
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
+  min-height: 60px;
+  box-sizing: border-box;
 }
 .drawer-close {
   display: flex;
@@ -712,7 +713,8 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px;
+  width: 44px;
+  height: 44px;
   color: var(--text3);
   transition: color 0.2s;
   flex-shrink: 0;
@@ -721,14 +723,11 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
 .drawer-close svg { width: 22px; height: 22px; display: block; }
 
 .drawer-nav {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 16px 0;
+  padding: 12px 0;
 }
 .drawer-link {
   display: block;
-  padding: 18px 32px;
+  padding: 18px 28px;
   font-size: 22px;
   font-weight: 200;
   letter-spacing: -0.5px;
@@ -741,10 +740,11 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
 .drawer-link:hover { color: var(--navy); padding-left: 40px; }
 
 .drawer-foot {
-  padding: 32px 32px 0;
+  margin-top: auto;
+  padding: 28px 28px 40px;
   flex-shrink: 0;
 }
-.drawer-foot .ft-logo { font-size: 16px; }
+.drawer-foot .ft-logo { font-size: 15px; }
 .drawer-tagline {
   font-size: 10px;
   font-weight: 300;
