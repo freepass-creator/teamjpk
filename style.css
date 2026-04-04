@@ -455,20 +455,44 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
 .member-sec {
   padding: 80px 0;
   border-top: 1px solid var(--line);
+  overflow: hidden;
 }
-.member-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+/* 마키 컨테이너 */
+.member-marquee-wrap {
+  position: relative;
+  overflow: hidden;
   margin-top: 32px;
+  cursor: grab;
+}
+.member-marquee-wrap:active { cursor: grabbing; }
+/* 양 끝 페이드 */
+.member-marquee-wrap::before,
+.member-marquee-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.member-marquee-wrap::before { left: 0;  background: linear-gradient(to right, var(--bg), transparent); }
+.member-marquee-wrap::after  { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
+
+.member-track {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  will-change: transform;
 }
 .member-item {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 28px 24px;
+  padding: 28px 28px;
   border: 1px solid var(--line);
   border-radius: 2px;
+  min-width: 200px;
+  flex-shrink: 0;
 }
 .member-item.member-empty {
   opacity: 0.35;
@@ -837,7 +861,6 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
 
   /* 회원사 */
   .member-sec  { padding: 64px 0; }
-  .member-grid { grid-template-columns: 1fr; gap: 12px; }
 
   /* Contact */
   .contact-sec    { padding: 72px 0; }
