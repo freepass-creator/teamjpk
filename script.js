@@ -549,13 +549,51 @@ var resizeDay = function () {};
   };
   window.resizeDay();
 
+  // 기존 파티클
   const particles = [
-    ...Array.from({ length: 120 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.0 + 0.4, a: Math.random() * 0.08 + 0.02, sp: Math.random() * 0.0008 + 0.0003, ph: Math.random() * 6.28 })),
-    ...Array.from({ length: 30  }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.5 + 0.6, a: Math.random() * 0.12 + 0.04, sp: Math.random() * 0.0005 + 0.0002, ph: Math.random() * 6.28 })),
+    ...Array.from({ length: 80 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 0.8 + 0.3, a: Math.random() * 0.06 + 0.01, sp: Math.random() * 0.0008 + 0.0003, ph: Math.random() * 6.28 })),
+    ...Array.from({ length: 20 }, () => ({ x: Math.random(), y: Math.random(), r: Math.random() * 1.2 + 0.5, a: Math.random() * 0.08 + 0.03, sp: Math.random() * 0.0005 + 0.0002, ph: Math.random() * 6.28 })),
   ];
+
+  // 별자리 깨알 — 아주 작고 은은하게
+  const starDots = Array.from({ length: 200 }, () => ({
+    x: Math.random(), y: Math.random(),
+    r: Math.random() * 0.7 + 0.2,
+    twSpd: Math.random() * 0.0015 + 0.0003,
+    ph: Math.random() * 6.28,
+    baseA: Math.random() * 0.04 + 0.01,
+  }));
+  // 가까운 별끼리 희미한 연결선
+  const starLines = [];
+  for (let i = 0; i < starDots.length; i++) {
+    for (let j = i + 1; j < starDots.length; j++) {
+      const dx = starDots[i].x - starDots[j].x;
+      const dy = starDots[i].y - starDots[j].y;
+      if (Math.sqrt(dx * dx + dy * dy) < 0.06) starLines.push([i, j]);
+    }
+  }
 
   function drawDay(t) {
     ctx.clearRect(0, 0, w, h);
+
+    // 별자리 연결선 (아주 희미하게)
+    for (const [a, b] of starLines) {
+      const sa = starDots[a], sb = starDots[b];
+      ctx.beginPath();
+      ctx.moveTo(sa.x * w, sa.y * h);
+      ctx.lineTo(sb.x * w, sb.y * h);
+      ctx.strokeStyle = 'rgba(12,37,80,0.018)';
+      ctx.lineWidth = 0.4;
+      ctx.stroke();
+    }
+    // 별 깨알
+    for (const s of starDots) {
+      const tw = Math.sin(t * s.twSpd + s.ph);
+      const a = s.baseA * (0.5 + ((tw + 1) / 2) * 0.5);
+      ctx.beginPath(); ctx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(12,37,80,${a})`; ctx.fill();
+    }
+    // 기존 파티클
     for (const s of particles) {
       const a = s.a * (0.4 + ((Math.sin(t * s.sp + s.ph) + 1) / 2) * 0.6);
       ctx.beginPath(); ctx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2);
@@ -631,255 +669,69 @@ var resizeDay = function () {};
 })();
 
 
-/* ── 6. 내용 섹션 캔버스 비주얼 ── */
-(function () {
-  const dpr = window.devicePixelRatio || 1;
 
-  /* 공통: 캔버스 초기화 */
-  function initCanvas(id) {
-    const el = document.getElementById(id);
-    if (!el) return null;
-    const ctx = el.getContext('2d');
-    function resize() {
-      const r = el.getBoundingClientRect();
-      el.width  = r.width  * dpr;
-      el.height = r.height * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-    resize();
-    window.addEventListener('resize', resize);
-    return { el, ctx, W: () => el.getBoundingClientRect().width, H: () => el.getBoundingClientRect().height };
+/* ── 6. 숫자 카운트업 애니메이션 ── */
+(function () {
+  const nums = document.querySelectorAll('.stat-num');
+  if (!nums.length) return;
+
+  function parseTarget(el) {
+    // 텍스트에서 숫자만 추출 (콤마, 소수점 포함)
+    const text = el.childNodes[0].textContent.trim();
+    return parseFloat(text.replace(/,/g, ''));
   }
 
-  /* ── About: 황금빛 네트워크 ──
-     따뜻한 amber 색상의 연결망 — "모빌리티 생태계 연결" */
-  (function () {
-    const c = initCanvas('vc-about');
-    if (!c) return;
+  function formatNum(n) {
+    if (n >= 1000) return n.toLocaleString();
+    return String(n);
+  }
 
-    const NODES = Array.from({ length: 18 }, () => ({
-      x:  Math.random(),
-      y:  Math.random(),
-      vx: (Math.random() - 0.5) * 0.00014,
-      vy: (Math.random() - 0.5) * 0.00014,
-      r:  Math.random() * 2.2 + 1.0,
-      hub: Math.random() < 0.25,
-    }));
+  function countUp(el, target, duration) {
+    const start = 0;
+    const startTime = performance.now();
 
-    function draw(t) {
-      const W = c.W(), H = c.H();
-      const ctx = c.ctx;
-      ctx.clearRect(0, 0, W, H);
-
-      for (let i = 0; i < NODES.length; i++) {
-        for (let j = i + 1; j < NODES.length; j++) {
-          const dx = (NODES[i].x - NODES[j].x) * W;
-          const dy = (NODES[i].y - NODES[j].y) * H;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          const maxD = W * 0.35;
-          if (dist < maxD) {
-            const alpha = (1 - dist / maxD) * 0.28;
-            ctx.beginPath();
-            ctx.moveTo(NODES[i].x * W, NODES[i].y * H);
-            ctx.lineTo(NODES[j].x * W, NODES[j].y * H);
-            ctx.strokeStyle = `rgba(255,190,60,${alpha})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        }
-      }
-
-      for (const n of NODES) {
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < 0.03 || n.x > 0.97) n.vx *= -1;
-        if (n.y < 0.03 || n.y > 0.97) n.vy *= -1;
-
-        const tw = Math.sin(t * 0.0009 + n.x * 9 + n.y * 7);
-        const a  = 0.5 + ((tw + 1) / 2) * 0.5;
-
-        if (n.hub) {
-          const g = ctx.createRadialGradient(n.x*W, n.y*H, 0, n.x*W, n.y*H, n.r * 6);
-          g.addColorStop(0, `rgba(255,180,40,${a * 0.22})`);
-          g.addColorStop(1, 'rgba(0,0,0,0)');
-          ctx.fillStyle = g;
-          ctx.beginPath(); ctx.arc(n.x*W, n.y*H, n.r*6, 0, Math.PI*2); ctx.fill();
-        }
-        ctx.beginPath();
-        ctx.arc(n.x*W, n.y*H, n.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(255,210,100,${a})`;
-        ctx.fill();
-      }
-      requestAnimationFrame(draw);
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // easeInOutCubic — 천천히 시작, 중간 가속, 천천히 도달
+      const ease = progress < 0.5
+        ? 4 * progress * progress * progress
+        : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+      const current = Math.round(start + (target - start) * ease);
+      el.childNodes[0].textContent = formatNum(current);
+      if (progress < 1) requestAnimationFrame(update);
     }
-    requestAnimationFrame(draw);
-  })();
+    requestAnimationFrame(update);
+  }
 
-  /* ── Role: 청록 웨이브 라인 ──
-     여러 겹의 흐르는 파동 — "방향을 안내하는 흐름" */
-  (function () {
-    const c = initCanvas('vc-role');
-    if (!c) return;
+  function getDuration(target) {
+    // 숫자가 작을수록 오래, 클수록 빠르게
+    if (target <= 5) return 2500;
+    if (target <= 20) return 2200;
+    if (target <= 50) return 2000;
+    if (target <= 100) return 1800;
+    return 1500;
+  }
 
-    const WAVES = [
-      { amp: 0.13, freq: 1.8, phase: 0,    speed: 0.00055, y: 0.35, a: 0.55, w: 1.8 },
-      { amp: 0.09, freq: 2.4, phase: 1.2,  speed: 0.00042, y: 0.50, a: 0.30, w: 1.2 },
-      { amp: 0.15, freq: 1.3, phase: 2.5,  speed: 0.00068, y: 0.63, a: 0.20, w: 0.8 },
-      { amp: 0.07, freq: 3.0, phase: 0.7,  speed: 0.00035, y: 0.75, a: 0.12, w: 0.6 },
-    ];
+  // 원본 숫자 저장
+  const targets = new Map();
+  nums.forEach(el => targets.set(el, parseTarget(el)));
 
-    function draw(t) {
-      const W = c.W(), H = c.H();
-      const ctx = c.ctx;
-      ctx.clearRect(0, 0, W, H);
-
-      for (const wv of WAVES) {
-        ctx.beginPath();
-        for (let x = 0; x <= W; x += 2) {
-          const norm = x / W;
-          const y = (wv.y + Math.sin(norm * Math.PI * 2 * wv.freq + t * wv.speed + wv.phase) * wv.amp) * H;
-          x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-        }
-        ctx.strokeStyle = `rgba(0,210,180,${wv.a})`;
-        ctx.lineWidth = wv.w;
-        ctx.stroke();
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const el = e.target;
+        const target = targets.get(el);
+        countUp(el, target, getDuration(target));
+      } else {
+        // 화면 밖으로 나가면 0으로 리셋
+        const el = e.target;
+        el.childNodes[0].textContent = '0';
       }
+    });
+  }, { threshold: 0.3 });
 
-      // 선도 광점: 가장 밝은 파도를 따라 움직이는 점
-      const wv0 = WAVES[0];
-      const px = (t * 0.00008 % 1) * W;
-      const norm = px / W;
-      const py = (wv0.y + Math.sin(norm * Math.PI * 2 * wv0.freq + t * wv0.speed + wv0.phase) * wv0.amp) * H;
-      const g = ctx.createRadialGradient(px, py, 0, px, py, 16);
-      g.addColorStop(0, 'rgba(0,240,200,0.45)');
-      g.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = g;
-      ctx.beginPath(); ctx.arc(px, py, 16, 0, Math.PI*2); ctx.fill();
-      ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI*2);
-      ctx.fillStyle = 'rgba(200,255,245,0.95)'; ctx.fill();
-
-      requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
-  })();
-
-  /* ── Value: 보라빛 동심원 펄스 ──
-     중심에서 번지는 동심원 파동 — "하나의 중심으로 수렴" */
-  (function () {
-    const c = initCanvas('vc-value');
-    if (!c) return;
-
-    const RINGS = Array.from({ length: 5 }, (_, i) => ({
-      phase: (i / 5) * Math.PI * 2,
-      speed: 0.00045,
-    }));
-
-    function draw(t) {
-      const W = c.W(), H = c.H();
-      const ctx = c.ctx;
-      ctx.clearRect(0, 0, W, H);
-
-      const cx = W * 0.5, cy = H * 0.5;
-      const maxR = Math.min(W, H) * 0.45;
-
-      for (const ring of RINGS) {
-        const progress = ((t * ring.speed + ring.phase / (Math.PI * 2)) % 1);
-        const r = progress * maxR;
-        const a = (1 - progress) * 0.5;
-
-        ctx.beginPath();
-        ctx.arc(cx, cy, r, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(180,100,255,${a})`;
-        ctx.lineWidth = 1.5 * (1 - progress);
-        ctx.stroke();
-      }
-
-      // 중심 글로우
-      const pulse = 0.7 + Math.sin(t * 0.0022) * 0.3;
-      const cg = ctx.createRadialGradient(cx, cy, 0, cx, cy, 30 * pulse);
-      cg.addColorStop(0, `rgba(200,130,255,${0.4 * pulse})`);
-      cg.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = cg;
-      ctx.beginPath(); ctx.arc(cx, cy, 30 * pulse, 0, Math.PI*2); ctx.fill();
-
-      ctx.beginPath(); ctx.arc(cx, cy, 4 * pulse, 0, Math.PI*2);
-      ctx.fillStyle = `rgba(230,200,255,${0.9 * pulse})`; ctx.fill();
-
-      requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
-  })();
-
-  /* ── Vision: 성장 바 차트 ──
-     아래서 솟아오르는 골드 컬럼 — "측정 가능한 성장" */
-  (function () {
-    const c = initCanvas('vc-vision');
-    if (!c) return;
-
-    const BARS = [
-      { x: 0.15, h: 0.55, phase: 0.0,  delay: 0    },
-      { x: 0.28, h: 0.70, phase: 0.4,  delay: 120  },
-      { x: 0.41, h: 0.48, phase: 0.8,  delay: 240  },
-      { x: 0.54, h: 0.82, phase: 1.2,  delay: 360  },
-      { x: 0.67, h: 0.63, phase: 1.6,  delay: 480  },
-      { x: 0.80, h: 0.90, phase: 2.0,  delay: 600  },
-    ];
-    const BAR_W = 0.07;
-    const BASE_Y = 0.88;
-
-    function draw(t) {
-      const W = c.W(), H = c.H();
-      const ctx = c.ctx;
-      ctx.clearRect(0, 0, W, H);
-
-      // 베이스 라인
-      ctx.beginPath();
-      ctx.moveTo(W * 0.08, H * BASE_Y);
-      ctx.lineTo(W * 0.92, H * BASE_Y);
-      ctx.strokeStyle = 'rgba(255,200,80,0.18)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-
-      for (const bar of BARS) {
-        const breathe = 1 + Math.sin(t * 0.0014 + bar.phase) * 0.06;
-        const h = bar.h * breathe;
-
-        const bx = bar.x * W;
-        const bw = BAR_W * W;
-        const by = BASE_Y * H;
-        const bh = h * H * 0.75;
-
-        // 바 그라디언트
-        const grad = ctx.createLinearGradient(bx, by - bh, bx, by);
-        grad.addColorStop(0, 'rgba(255,210,60,0.85)');
-        grad.addColorStop(0.6, 'rgba(255,170,30,0.50)');
-        grad.addColorStop(1, 'rgba(255,140,0,0.10)');
-        ctx.fillStyle = grad;
-        ctx.fillRect(bx - bw/2, by - bh, bw, bh);
-
-        // 상단 하이라이트
-        const topG = ctx.createRadialGradient(bx, by - bh, 0, bx, by - bh, bw * 0.8);
-        topG.addColorStop(0, 'rgba(255,240,150,0.60)');
-        topG.addColorStop(1, 'rgba(0,0,0,0)');
-        ctx.fillStyle = topG;
-        ctx.beginPath(); ctx.arc(bx, by - bh, bw * 0.8, 0, Math.PI*2); ctx.fill();
-      }
-
-      // 추세선 (바 상단 잇기)
-      ctx.beginPath();
-      BARS.forEach((bar, i) => {
-        const breathe = 1 + Math.sin(t * 0.0014 + bar.phase) * 0.06;
-        const bx = bar.x * W;
-        const by = BASE_Y * H - bar.h * breathe * H * 0.75;
-        i === 0 ? ctx.moveTo(bx, by) : ctx.lineTo(bx, by);
-      });
-      ctx.strokeStyle = 'rgba(255,220,80,0.35)';
-      ctx.lineWidth = 1.2;
-      ctx.stroke();
-
-      requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
-  })();
+  nums.forEach(el => obs.observe(el));
 })();
 
 /* ── 회원사 마키 (자동 좌우 스크롤) ── */

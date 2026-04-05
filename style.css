@@ -26,6 +26,7 @@ body {
   color: var(--text);
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  word-break: keep-all;
 }
 
 /* ============================================================
@@ -227,6 +228,7 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   margin-top: 18px;
 }
 
+
 /* 텍스트 정렬 */
 .tr { text-align: right; }
 .tr .desc { margin-left: auto; max-width: 420px; }
@@ -235,19 +237,94 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
 /* SVG 비주얼 */
 .vis svg { width: 100%; height: auto; }
 
-/* 어두운 캔버스 비주얼 카드 */
-.vis-dark {
-  background: #050C1A;
-  border-radius: 4px;
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
+/* 일러스트 비주얼 */
+.vis-illust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
   position: relative;
 }
-.vis-dark canvas {
-  position: absolute;
-  inset: 0;
+.vis-illust img,
+.vis-illust object {
   width: 100%;
-  height: 100%;
+  max-width: 400px;
+  height: auto;
+}
+
+/* 별자리 깨알 오버레이 — 눈에 보이는 수준 */
+.vis-illust::before,
+.vis-illust::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+
+/* 깨알 점 (::before) */
+.vis-illust::before {
+  inset: -10%;
+  background-image:
+    radial-gradient(circle 2px at 12% 8%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 78% 15%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2.5px at 35% 85%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.8px at 92% 42%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2px at 55% 5%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 18% 62%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 3px at 68% 72%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.8px at 45% 38%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2px at 82% 88%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 8% 35%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2.2px at 62% 48%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.8px at 28% 22%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 3px at 88% 12%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 42% 65%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2px at 72% 32%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2.5px at 5% 92%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.8px at 95% 68%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2px at 50% 52%, var(--navy) 0%, transparent 100%);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  animation: starSeedTwinkle 4s ease-in-out infinite alternate;
+}
+
+/* 연결선 (::after) — 가까운 깨알끼리 별자리처럼 */
+.vis-illust::after {
+  inset: -10%;
+  background:
+    linear-gradient(to right, transparent 11%, var(--navy) 11.5%, var(--navy) 12%, transparent 12.5%) no-repeat 0 0 / 80% 16%,
+    linear-gradient(135deg, transparent 34%, var(--navy) 34.3%, var(--navy) 34.6%, transparent 35%) no-repeat 0 0 / 70% 90%,
+    linear-gradient(45deg, transparent 60%, var(--navy) 60.2%, var(--navy) 60.4%, transparent 61%) no-repeat 0 0 / 95% 55%,
+    linear-gradient(160deg, transparent 47%, var(--navy) 47.2%, var(--navy) 47.4%, transparent 48%) no-repeat 0 0 / 75% 80%;
+  opacity: 0.03;
+}
+
+@keyframes starSeedTwinkle {
+  0%   { opacity: 0.05; }
+  100% { opacity: 0.12; }
+}
+
+/* 짝수 섹션 깨알 위치 변형 */
+.row:nth-child(even) .vis-illust::before {
+  background-image:
+    radial-gradient(circle 2px at 22% 12%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.8px at 68% 22%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2.5px at 45% 78%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 85% 48%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2px at 15% 8%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 3px at 75% 65%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 32% 92%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2px at 58% 18%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.8px at 90% 82%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2.2px at 12% 52%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 52% 58%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2.5px at 38% 35%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.8px at 78% 90%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2px at 55% 42%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 3px at 28% 72%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 8% 85%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2px at 92% 25%, var(--navy) 0%, transparent 100%),
+    radial-gradient(circle 2.2px at 65% 55%, var(--navy) 0%, transparent 100%);
 }
 
 
@@ -281,6 +358,52 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
 
 
 /* ============================================================
+   핵심 지표 (Stats)
+   ============================================================ */
+.stats-sec {
+  padding: 72px 0;
+  border-top: 1px solid var(--line);
+}
+.stats-intro {
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--text3);
+  text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: 0.5px;
+}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+.stat-item {
+  text-align: center;
+  padding: 32px 16px;
+}
+.stat-num {
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 200;
+  letter-spacing: -2px;
+  color: var(--navy);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.stat-unit {
+  font-size: 0.45em;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--text3);
+  margin-left: 2px;
+}
+.stat-label {
+  font-size: 12.5px;
+  font-weight: 300;
+  color: var(--text2);
+  letter-spacing: 0.3px;
+}
+
+/* ============================================================
    서비스 섹션
    ============================================================ */
 .svc-sec {
@@ -303,7 +426,7 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   border: 1px solid var(--line);
 }
 .svc-card {
-  padding: 36px 28px 40px;
+  padding: 32px 28px 36px;
   border-right: 1px solid var(--line);
   transition: background 0.25s;
   cursor: default;
@@ -324,13 +447,26 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
 .svc-card:hover { background: #fff; }
 .svc-card:hover::after { transform: scaleX(1); }
 
+/* 서비스 카드 아이콘 */
+.svc-icon {
+  margin-bottom: 20px;
+}
+.svc-icon svg {
+  width: 28px;
+  height: 28px;
+  color: var(--navy);
+  opacity: 0.35;
+  transition: opacity 0.3s;
+}
+.svc-card:hover .svc-icon svg { opacity: 0.7; }
+
 .svc-num {
   font-size: 10px;
   font-weight: 400;
   letter-spacing: 2px;
   color: var(--navy);
   opacity: 0.28;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 .svc-name {
   font-size: 15.5px;
@@ -354,12 +490,27 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   padding: 100px 0;
   border-top: 1px solid var(--line);
 }
+/* 브랜드 섹션 제목 */
+.brand-heading {
+  font-size: clamp(22px, 2.5vw, 30px);
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: -0.8px;
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
+.brand-heading em {
+  font-style: normal;
+  font-weight: 500;
+  color: var(--navy);
+}
+
 .brand-intro {
   font-size: 13.5px;
   font-weight: 300;
-  color: var(--text3);
-  margin-top: 16px;
-  margin-bottom: 40px;
+  color: var(--text2);
+  margin-bottom: 44px;
+  line-height: 1.8;
 }
 .brand-grid {
   display: grid;
@@ -371,14 +522,26 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   text-decoration: none;
   color: inherit;
   border: 1px solid var(--line);
-  border-radius: 2px;
+  border-radius: 6px;
   transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
+.brand-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--navy), rgba(12, 37, 80, 0.3));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.brand-card:hover::before { opacity: 1; }
 .brand-card:hover {
-  border-color: rgba(12, 37, 80, 0.2);
-  box-shadow: 0 8px 32px rgba(12, 37, 80, 0.06);
-  transform: translateY(-3px);
+  border-color: rgba(12, 37, 80, 0.15);
+  box-shadow: 0 12px 40px rgba(12, 37, 80, 0.08);
+  transform: translateY(-4px);
 }
 .brand-card:active { transform: translateY(-1px); }
 .brand-card-inner { padding: 32px 28px 28px; }
@@ -427,6 +590,21 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   border: 1px solid currentColor;
   border-radius: 1px;
 }
+
+/* switchplan 직영 운영 카드 — 같은 형태, 톤만 다르게 */
+.brand-card--model {
+  background: rgba(12, 37, 80, 0.03);
+  border-color: rgba(12, 37, 80, 0.12);
+}
+.brand-card--model .brand-name .lt { color: var(--navy); opacity: 0.5; }
+.brand-card--model .brand-name .bd { color: var(--navy); }
+.brand-card--model .brand-tag {
+  color: #fff;
+  background: var(--navy);
+  border-color: var(--navy);
+  opacity: 0.6;
+}
+
 
 /* ============================================================
    회원사 섹션
@@ -559,7 +737,13 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
 }
 
 /* 연락처 정보 항목 */
-.contact-info-item { margin-bottom: 36px; }
+.contact-info-item {
+  margin-bottom: 36px;
+  padding-left: 16px;
+  border-left: 2px solid var(--line);
+  transition: border-color 0.3s;
+}
+.contact-info-item:hover { border-left-color: var(--navy); }
 .contact-info-item:last-child { margin-bottom: 0; }
 .contact-label {
   font-size: 10px;
@@ -626,16 +810,30 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
 /* ============================================================
    푸터
    ============================================================ */
-footer { padding: 48px 0; border-top: 1px solid var(--line); }
+footer { padding: 56px 0; border-top: 1px solid var(--line); }
 .ft {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
 }
+.ft-left {}
 .ft-logo { font-size: 15px; display: inline-flex; align-items: baseline; }
 .ft-logo span { font-weight: 200; color: var(--text3); }
 .ft-logo b    { font-weight: 700; color: var(--navy); opacity: 0.3; margin-left: 3px; }
+.ft-tagline {
+  font-size: 9.5px;
+  font-weight: 300;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text3);
+  opacity: 0.6;
+  margin-top: 8px;
+}
+.ft-right { text-align: right; }
 .ft-cp { font-size: 10px; font-weight: 300; color: var(--text3); }
+.ft-attr { font-size: 9px; font-weight: 300; margin-top: 4px; }
+.ft-attr a { color: var(--text3); opacity: 0.5; text-decoration: none; transition: opacity 0.2s; }
+.ft-attr a:hover { opacity: 1; }
 
 /* ============================================================
    히어로 스크롤 유도
@@ -786,6 +984,7 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
   .svc-card { border-bottom: 1px solid var(--line); }
   .svc-card:nth-child(2n) { border-right: none; }
   .svc-card:nth-last-child(-n+2) { border-bottom: none; }
+  .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
 }
 
 /* ============================================================
@@ -819,6 +1018,8 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
   .row .tr { order: -1; text-align: left; }
   .row .tr .desc { margin-left: 0; }
   .row svg { max-width: 240px; margin: 0 auto; display: block; }
+  .vis-illust img,
+  .vis-illust object { max-width: 260px; }
 
   /* 서비스 카드 */
   .svc-sec  { padding: 72px 0; }
@@ -862,8 +1063,15 @@ footer { padding: 48px 0; border-top: 1px solid var(--line); }
   }
   .btn-submit:hover { opacity: 1; background: var(--navy); color: #fff; }
 
+  /* 지표 */
+  .stats-sec { padding: 48px 0; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0; }
+  .stat-item { padding: 24px 16px; }
+  .stat-item:nth-child(n+3) { border-top: 1px solid var(--line); }
+
   /* 푸터 */
-  .ft { flex-direction: column; gap: 10px; text-align: center; }
+  .ft { flex-direction: column; gap: 16px; text-align: center; align-items: center; }
+  .ft-left { text-align: center; }
 }
 
 /* ============================================================
