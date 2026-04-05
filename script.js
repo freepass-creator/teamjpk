@@ -784,6 +784,32 @@ var resizeDay = function () {};
 })();
 
 
+/* ── 연락처 자동 하이픈 ── */
+(function () {
+  const phone = document.querySelector('input[name="phone"]');
+  if (!phone) return;
+
+  phone.addEventListener('input', function () {
+    let v = this.value.replace(/[^0-9]/g, '');
+    if (v.startsWith('02')) {
+      // 서울 02
+      if (v.length <= 2) v = v;
+      else if (v.length <= 6) v = v.slice(0,2) + '-' + v.slice(2);
+      else if (v.length <= 9) v = v.slice(0,2) + '-' + v.slice(2,5) + '-' + v.slice(5);
+      else v = v.slice(0,2) + '-' + v.slice(2,6) + '-' + v.slice(6,10);
+    } else if (v.length <= 3) {
+      v = v;
+    } else if (v.length <= 7) {
+      v = v.slice(0,3) + '-' + v.slice(3);
+    } else if (v.length <= 10) {
+      v = v.slice(0,3) + '-' + v.slice(3,6) + '-' + v.slice(6);
+    } else {
+      v = v.slice(0,3) + '-' + v.slice(3,7) + '-' + v.slice(7,11);
+    }
+    this.value = v;
+  });
+})();
+
 /* ── 문의 폼 AJAX 전송 (인증 완료 후 활성화) ── */
 (function () {
   const form = document.getElementById('contactForm');
