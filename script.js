@@ -782,3 +782,42 @@ var resizeDay = function () {};
     paused = false;
   });
 })();
+
+
+/* ── 문의 폼 AJAX 전송 (인증 완료 후 활성화) ── */
+(function () {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  // FormSubmit 인증이 안 된 상태면 일반 폼 전송 (인증 후 아래 주석 해제)
+  const VERIFIED = false;
+  if (!VERIFIED) return;
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const btn = form.querySelector('.btn-submit');
+    const origText = btn.innerHTML;
+    btn.innerHTML = '전송 중...';
+    btn.disabled = true;
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(res => {
+      if (res.ok) {
+        form.reset();
+        btn.innerHTML = '문의가 접수되었습니다. 감사합니다.';
+        setTimeout(() => { btn.innerHTML = origText; btn.disabled = false; }, 4000);
+      } else {
+        btn.innerHTML = '전송에 실패했습니다. 다시 시도해주세요.';
+        setTimeout(() => { btn.innerHTML = origText; btn.disabled = false; }, 3000);
+      }
+    })
+    .catch(() => {
+      btn.innerHTML = '전송에 실패했습니다. 다시 시도해주세요.';
+      setTimeout(() => { btn.innerHTML = origText; btn.disabled = false; }, 3000);
+    });
+  });
+})();
