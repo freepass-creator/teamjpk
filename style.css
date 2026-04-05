@@ -250,15 +250,6 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   height: 100%;
 }
 
-/* SVG 원 깜빡임 애니메이션 */
-@keyframes tw {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.3; }
-}
-.vis circle                  { animation: tw 3s ease-in-out infinite; }
-.vis circle:nth-child(2n)    { animation-duration: 2.4s; animation-delay: 0.7s; }
-.vis circle:nth-child(3n)    { animation-duration: 3.8s; animation-delay: 1.5s; }
-.vis circle:nth-child(5n)    { animation-duration: 4.2s; animation-delay: 0.3s; }
 
 /* ============================================================
    가로형 섹션 (브랜드 / 회원사 공통)
@@ -288,17 +279,6 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
 .hz-sub  { font-size: 12px; font-weight: 300; color: var(--text3); }
 .hz-empty { font-size: 13px; font-weight: 300; color: var(--text3); opacity: 0.35; padding-top: 8px; }
 
-/* ============================================================
-   가로형 섹션 — 더 이상 사용하지 않지만 호환성 유지
-   ============================================================ */
-.hz-sec { padding: 100px 0; border-top: 1px solid var(--line); }
-.hz-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 48px; margin-top: 48px; }
-.hz-ci { margin-bottom: 20px; font-size: 22px; letter-spacing: -1px; line-height: 1; }
-.hz-ci .lt { font-weight: 200; color: #555; }
-.hz-ci .bd { font-weight: 700; color: var(--navy); margin-left: 3px; }
-.hz-desc  { font-size: 13px; font-weight: 300; color: var(--text2); line-height: 1.8; }
-.hz-sub   { font-size: 12px; font-weight: 300; color: var(--text3); }
-.hz-empty { font-size: 13px; font-weight: 300; color: var(--text3); opacity: 0.35; padding-top: 8px; }
 
 /* ============================================================
    서비스 섹션
@@ -488,7 +468,7 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding: 28px 28px;
+  padding: 28px;
   border: 1px solid var(--line);
   border-radius: 2px;
   min-width: 200px;

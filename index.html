@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TEAMJPK — 모빌리티 비즈니스의 길을 안내합니다. 렌탈·리스 운영 컨설팅, 파트너 네트워크, 플랫폼 채널 활용까지.">
   <title>teamjpk</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard@latest/dist/web/static/pretendard.min.css">
   <link rel="stylesheet" href="style.css">
@@ -21,7 +22,7 @@
       <li><a href="#brand">브랜드</a></li>
       <li><a href="#contact">함께하기</a></li>
     </ul>
-    <button class="mb" id="mbBtn" aria-label="메뉴">
+    <button class="mb" id="mbBtn" aria-label="메뉴" aria-expanded="false">
       <svg viewBox="0 0 24 24"><line x1="4" y1="8" x2="20" y2="8"/><line x1="4" y1="16" x2="20" y2="16"/></svg>
     </button>
   </div>
@@ -322,23 +323,23 @@
         </div>
 
         <!-- 문의 폼 -->
-        <div class="contact-form">
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('전송 기능은 서버 연동 후 활성화됩니다.');">
           <div class="form-grid">
-            <div class="form-field"><input type="text"  placeholder="회사명"></div>
-            <div class="form-field"><input type="text"  placeholder="담당자명"></div>
-            <div class="form-field"><input type="tel"   placeholder="연락처"></div>
-            <div class="form-field"><input type="email" placeholder="이메일"></div>
+            <div class="form-field"><input type="text"  name="company" placeholder="회사명"></div>
+            <div class="form-field"><input type="text"  name="manager" placeholder="담당자명"></div>
+            <div class="form-field"><input type="tel"   name="phone"   placeholder="연락처"></div>
+            <div class="form-field"><input type="email" name="email"   placeholder="이메일"></div>
           </div>
           <div class="form-field form-message">
-            <textarea placeholder="문의 내용을 자유롭게 작성해 주세요."></textarea>
+            <textarea name="message" placeholder="문의 내용을 자유롭게 작성해 주세요."></textarea>
           </div>
           <div class="form-submit">
-            <button class="btn-submit" onclick="alert('전송 기능은 서버 연동 후 활성화됩니다.')">
+            <button type="submit" class="btn-submit">
               문의 보내기
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
             </button>
           </div>
-        </div>
+        </form>
 
       </div>
     </div>
