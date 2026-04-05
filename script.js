@@ -789,10 +789,6 @@ var resizeDay = function () {};
   const form = document.getElementById('contactForm');
   if (!form) return;
 
-  // FormSubmit 인증이 안 된 상태면 일반 폼 전송 (인증 후 아래 주석 해제)
-  const VERIFIED = false;
-  if (!VERIFIED) return;
-
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     const btn = form.querySelector('.btn-submit');
@@ -800,7 +796,7 @@ var resizeDay = function () {};
     btn.innerHTML = '전송 중...';
     btn.disabled = true;
 
-    fetch(form.action, {
+    fetch('https://formsubmit.co/ajax/dudguq@gmail.com', {
       method: 'POST',
       body: new FormData(form),
       headers: { 'Accept': 'application/json' }
