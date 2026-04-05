@@ -373,13 +373,13 @@
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_template" value="table">
           <div class="form-grid">
-            <div class="form-field"><input type="text"  name="company" placeholder="회사명" required></div>
-            <div class="form-field"><input type="text"  name="manager" placeholder="담당자명" required></div>
-            <div class="form-field"><input type="tel"   name="phone"   placeholder="연락처" required></div>
-            <div class="form-field"><input type="email" name="email"   placeholder="이메일" required></div>
+            <div class="form-field"><input type="text"  name="company" placeholder="회사명" required inputmode="text" lang="ko"></div>
+            <div class="form-field"><input type="text"  name="manager" placeholder="담당자명" required inputmode="text" lang="ko"></div>
+            <div class="form-field"><input type="tel"   name="phone"   placeholder="연락처" required inputmode="tel"></div>
+            <div class="form-field"><input type="email" name="email"   placeholder="이메일" required inputmode="email" lang="en"></div>
           </div>
           <div class="form-field form-message">
-            <textarea name="message" placeholder="문의 내용을 자유롭게 작성해 주세요."></textarea>
+            <textarea name="message" placeholder="문의 내용을 자유롭게 작성해 주세요." lang="ko"></textarea>
           </div>
           <div class="form-submit">
             <button type="submit" class="btn-submit">

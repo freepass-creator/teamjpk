@@ -801,8 +801,9 @@ var resizeDay = function () {};
       body: new FormData(form),
       headers: { 'Accept': 'application/json' }
     })
-    .then(res => {
-      if (res.ok) {
+    .then(res => res.json())
+    .then(data => {
+      if (data.success === "true" || data.success === true) {
         form.reset();
         btn.innerHTML = '문의가 접수되었습니다. 감사합니다.';
         setTimeout(() => { btn.innerHTML = origText; btn.disabled = false; }, 4000);
