@@ -47,10 +47,10 @@ nav.s {
   border-bottom: 1px solid var(--line);
 }
 .nv {
-  max-width: 1080px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 48px;
-  height: 56px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,17 +59,17 @@ nav.s {
 /* 로고 — CI 규격: Exo 2 + Pretendard, weight 300/600 */
 .logo {
   font-family: 'Exo 2', 'Pretendard', sans-serif;
-  font-size: 18px;
+  font-size: 28px;
   text-decoration: none;
   display: inline-flex;
   align-items: baseline;
 }
 .logo span { font-weight: 300; transition: color 0.4s; }
-.logo b    { font-weight: 600; margin-left: 3px; transition: color 0.4s; }
+.logo b    { font-weight: 600; margin-left: 4px; transition: color 0.4s; }
 
 /* 히어로 위(어두운 배경)일 때 로고 색 */
 body.hv .logo span { color: rgba(255, 255, 255, 0.4); }
-body.hv .logo b    { color: rgba(255, 255, 255, 0.85); }
+body.hv .logo b    { color: rgba(255, 255, 255, 0.95); }
 /* 스크롤 후(밝은 배경)일 때 로고 색 */
 body:not(.hv) .logo span { color: #555; }
 body:not(.hv) .logo b    { color: var(--navy); }
@@ -77,12 +77,12 @@ body:not(.hv) .logo b    { color: var(--navy); }
 /* 네비 링크 */
 .nl {
   display: flex;
-  gap: 28px;
+  gap: 36px;
   list-style: none;
 }
 .nl a {
   text-decoration: none;
-  font-size: 12.5px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.3px;
   transition: color 0.4s;
