@@ -3,14 +3,17 @@
    수정할 때: 색상은 :root 변수, 레이아웃은 각 섹션 주석 참고
    ============================================================ */
 
-/* ── 색상 변수 (여기서 전체 색상 관리) ── */
+/* ── CI 3색 체계 (teamjpk) ── */
 :root {
-  --navy:  #0C2550;   /* 메인 포인트 색 */
-  --text:  #1A1A1A;   /* 본문 텍스트 */
-  --text2: #555;      /* 보조 텍스트 */
-  --text3: #999;      /* 약한 텍스트 (태그, 캡션) */
-  --bg:    #F8F7F5;   /* 페이지 배경 */
-  --line:  rgba(0, 0, 0, 0.06); /* 구분선 */
+  --main:   #0D0D0F;   /* 메인 블랙 */
+  --accent: #1B2A4A;   /* 보조 딥네이비 (freepass 메인과 공유 → 브랜드 패밀리) */
+  --base:   #7F8599;   /* 바닥 뉴트럴그레이 */
+  --navy:   var(--accent); /* 레거시 호환 */
+  --text:   #1A1A1A;
+  --text2:  #555;
+  --text3:  #999;
+  --bg:     #F8F7F5;
+  --line:   rgba(0, 0, 0, 0.06);
 }
 
 /* ── 리셋 & 기본 ── */
@@ -53,15 +56,16 @@ nav.s {
   justify-content: space-between;
 }
 
-/* 로고 */
+/* 로고 — CI 규격: Exo 2 + Pretendard, weight 300/600 */
 .logo {
+  font-family: 'Exo 2', 'Pretendard', sans-serif;
   font-size: 18px;
   text-decoration: none;
   display: inline-flex;
   align-items: baseline;
 }
-.logo span { font-weight: 200; transition: color 0.4s; }
-.logo b    { font-weight: 700; margin-left: 3px; transition: color 0.4s; }
+.logo span { font-weight: 300; transition: color 0.4s; }
+.logo b    { font-weight: 600; margin-left: 3px; transition: color 0.4s; }
 
 /* 히어로 위(어두운 배경)일 때 로고 색 */
 body.hv .logo span { color: rgba(255, 255, 255, 0.4); }
@@ -342,15 +346,16 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   margin-top: 48px;
 }
 
-/* 브랜드 로고형 타이틀 */
+/* 브랜드 로고형 타이틀 — CI 규격 */
 .hz-ci {
+  font-family: 'Exo 2', 'Pretendard', sans-serif;
   margin-bottom: 20px;
   font-size: 22px;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
   line-height: 1;
 }
-.hz-ci .lt { font-weight: 200; color: #555; }
-.hz-ci .bd { font-weight: 700; color: var(--navy); margin-left: 3px; }
+.hz-ci .lt { font-weight: 300; color: #555; }
+.hz-ci .bd { font-weight: 600; color: var(--navy); margin-left: 3px; }
 
 .hz-desc { font-size: 13px; font-weight: 300; color: var(--text2); line-height: 1.8; }
 .hz-sub  { font-size: 12px; font-weight: 300; color: var(--text3); }
@@ -553,12 +558,13 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   margin-bottom: 20px;
 }
 .brand-name {
+  font-family: 'Exo 2', 'Pretendard', sans-serif;
   font-size: 20px;
-  letter-spacing: -0.8px;
+  letter-spacing: -0.5px;
   line-height: 1;
 }
-.brand-name .lt { font-weight: 200; color: var(--text2); }
-.brand-name .bd { font-weight: 700; color: var(--navy); margin-left: 2px; }
+.brand-name .lt { font-weight: 300; color: var(--text2); }
+.brand-name .bd { font-weight: 600; color: var(--navy); margin-left: 3px; }
 
 .brand-arrow {
   width: 18px; height: 18px;
@@ -817,9 +823,9 @@ footer { padding: 56px 0; border-top: 1px solid var(--line); }
   align-items: flex-end;
 }
 .ft-left {}
-.ft-logo { font-size: 15px; display: inline-flex; align-items: baseline; }
-.ft-logo span { font-weight: 200; color: var(--text3); }
-.ft-logo b    { font-weight: 700; color: var(--navy); opacity: 0.3; margin-left: 3px; }
+.ft-logo { font-family: 'Exo 2', 'Pretendard', sans-serif; font-size: 15px; display: inline-flex; align-items: baseline; }
+.ft-logo span { font-weight: 300; color: var(--text3); }
+.ft-logo b    { font-weight: 600; color: var(--navy); opacity: 0.3; margin-left: 3px; }
 .ft-tagline {
   font-size: 9.5px;
   font-weight: 300;

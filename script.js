@@ -47,7 +47,7 @@ var resizeDay = function () {};
   function makeBgStar(rMin, rMax, aMin, aMax, glow, colorPool) {
     const col = colorPool[Math.floor(Math.random() * colorPool.length)];
     return {
-      x:       Math.random(),
+      x:       0.2 + Math.random() * 0.8, // 우측 편향 (0.2~1.0 범위)
       y:       Math.random(),
       r:       Math.random() * (rMax - rMin) + rMin,
       baseA:   Math.random() * (aMax - aMin) + aMin,
@@ -76,7 +76,7 @@ var resizeDay = function () {};
      실제 북극/겨울 하늘 위치 기반으로 배치
      Polaris 기준으로 공전 (매우 느리게)
   ────────────────────────────────────────── */
-  const POLARIS = { x: 0.50, y: 0.07 }; // 북극성: 화면 위 중앙 고정
+  const POLARIS = { x: 0.65, y: 0.07 }; // 북극성: 우측으로 (텍스트가 좌측이므로)
 
   const CONSTELLATIONS = [
     /* 큰곰자리 (Ursa Major / Big Dipper)
@@ -84,14 +84,14 @@ var resizeDay = function () {};
     {
       name: '큰곰자리',
       stars: [
-        { x: 0.48, y: 0.17, r: 1.9, bright: false, color: C.blueWhite }, // η Alkaid  (손잡이 끝)
-        { x: 0.42, y: 0.22, r: 2.0, bright: false, color: C.white     }, // ζ Mizar
-        { x: 0.36, y: 0.24, r: 2.2, bright: true,  color: C.white     }, // ε Alioth  (밝음)
-        { x: 0.31, y: 0.20, r: 1.6, bright: false, color: C.white     }, // δ Megrez  (가장 어두움)
-        { x: 0.27, y: 0.28, r: 2.5, bright: true,  color: C.yellow    }, // α Dubhe   (국자 앞 위)
-        { x: 0.29, y: 0.35, r: 2.2, bright: true,  color: C.blueWhite }, // β Merak   (국자 앞 아래)
-        { x: 0.34, y: 0.36, r: 2.0, bright: false, color: C.white     }, // γ Phecda  (국자 뒤 아래)
-        { x: 0.33, y: 0.29, r: 1.7, bright: false, color: C.white     }, // δ (Megrez 재사용 방지용 위치 조정)
+        { x: 0.63, y: 0.17, r: 1.9, bright: false, color: C.blueWhite }, // η Alkaid
+        { x: 0.57, y: 0.22, r: 2.0, bright: false, color: C.white     }, // ζ Mizar
+        { x: 0.51, y: 0.24, r: 2.2, bright: true,  color: C.white     }, // ε Alioth
+        { x: 0.46, y: 0.20, r: 1.6, bright: false, color: C.white     }, // δ Megrez
+        { x: 0.42, y: 0.28, r: 2.5, bright: true,  color: C.yellow    }, // α Dubhe
+        { x: 0.44, y: 0.35, r: 2.2, bright: true,  color: C.blueWhite }, // β Merak
+        { x: 0.49, y: 0.36, r: 2.0, bright: false, color: C.white     }, // γ Phecda
+        { x: 0.48, y: 0.29, r: 1.7, bright: false, color: C.white     }, // δ
       ],
       //  손잡이: 0-1-2-3, 국자: 3-4-5-6-7-3
       lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,3]],
@@ -102,13 +102,13 @@ var resizeDay = function () {};
       name: '작은곰자리',
       fixed: true,
       stars: [
-        { x: 0.50, y: 0.07, r: 3.0, bright: true,  color: C.yellow  }, // α Polaris  (북극성, 황백색)
-        { x: 0.46, y: 0.13, r: 1.4, bright: false, color: C.white   }, // δ
-        { x: 0.42, y: 0.17, r: 1.3, bright: false, color: C.white   }, // ε
-        { x: 0.39, y: 0.21, r: 1.4, bright: false, color: C.white   }, // ζ
-        { x: 0.36, y: 0.17, r: 1.6, bright: false, color: C.white   }, // η
-        { x: 0.32, y: 0.12, r: 2.0, bright: true,  color: C.orange  }, // γ Pherkad
-        { x: 0.29, y: 0.08, r: 2.6, bright: true,  color: C.orange  }, // β Kochab   (주황색 거성)
+        { x: 0.65, y: 0.07, r: 3.0, bright: true,  color: C.yellow  }, // α Polaris
+        { x: 0.61, y: 0.13, r: 1.4, bright: false, color: C.white   }, // δ
+        { x: 0.57, y: 0.17, r: 1.3, bright: false, color: C.white   }, // ε
+        { x: 0.54, y: 0.21, r: 1.4, bright: false, color: C.white   }, // ζ
+        { x: 0.51, y: 0.17, r: 1.6, bright: false, color: C.white   }, // η
+        { x: 0.47, y: 0.12, r: 2.0, bright: true,  color: C.orange  }, // γ Pherkad
+        { x: 0.44, y: 0.08, r: 2.6, bright: true,  color: C.orange  }, // β Kochab
       ],
       lines: [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,3]],
     },
@@ -160,13 +160,13 @@ var resizeDay = function () {};
     {
       name: '오리온',
       stars: [
-        { x: 0.40, y: 0.61, r: 3.8, bright: true, color: C.red        }, // α Betelgeuse (붉은 초거성, 매우 특징적)
-        { x: 0.51, y: 0.58, r: 2.6, bright: true, color: C.blueWhite  }, // γ Bellatrix
-        { x: 0.42, y: 0.68, r: 1.9, bright: false, color: C.blueWhite }, // δ Mintaka  (벨트 왼쪽)
-        { x: 0.46, y: 0.69, r: 2.1, bright: false, color: C.blueWhite }, // ε Alnilam  (벨트 중앙, 가장 밝음)
-        { x: 0.50, y: 0.68, r: 1.9, bright: false, color: C.blueWhite }, // ζ Alnitak  (벨트 오른쪽)
-        { x: 0.43, y: 0.77, r: 2.1, bright: true,  color: C.blueWhite }, // κ Saiph   (왼발)
-        { x: 0.52, y: 0.75, r: 3.3, bright: true,  color: C.blueWhite }, // β Rigel   (오른발, 파란 초거성)
+        { x: 0.58, y: 0.61, r: 3.8, bright: true, color: C.red        }, // α Betelgeuse
+        { x: 0.69, y: 0.58, r: 2.6, bright: true, color: C.blueWhite  }, // γ Bellatrix
+        { x: 0.60, y: 0.68, r: 1.9, bright: false, color: C.blueWhite }, // δ Mintaka
+        { x: 0.64, y: 0.69, r: 2.1, bright: false, color: C.blueWhite }, // ε Alnilam
+        { x: 0.68, y: 0.68, r: 1.9, bright: false, color: C.blueWhite }, // ζ Alnitak
+        { x: 0.61, y: 0.77, r: 2.1, bright: true,  color: C.blueWhite }, // κ Saiph
+        { x: 0.70, y: 0.75, r: 3.3, bright: true,  color: C.blueWhite }, // β Rigel
       ],
       //  어깨-어깨, 어깨-벨트, 벨트 3개, 벨트-발
       lines: [[0,1],[0,2],[1,4],[2,3],[3,4],[2,5],[4,6]],
@@ -177,14 +177,14 @@ var resizeDay = function () {};
     {
       name: '쌍둥이',
       stars: [
-        { x: 0.27, y: 0.53, r: 2.5, bright: true,  color: C.blueWhite }, // α Castor   (청백)
-        { x: 0.33, y: 0.52, r: 2.9, bright: true,  color: C.orange    }, // β Pollux   (주황, 약간 더 밝음)
-        { x: 0.23, y: 0.59, r: 1.5, bright: false, color: C.white      },
-        { x: 0.29, y: 0.58, r: 1.5, bright: false, color: C.white      },
-        { x: 0.21, y: 0.65, r: 1.8, bright: false, color: C.yellow     }, // μ
-        { x: 0.27, y: 0.64, r: 1.5, bright: false, color: C.white      },
-        { x: 0.19, y: 0.71, r: 1.7, bright: true,  color: C.white      }, // η Tejat   (발)
-        { x: 0.25, y: 0.70, r: 1.5, bright: false, color: C.white      },
+        { x: 0.42, y: 0.53, r: 2.5, bright: true,  color: C.blueWhite }, // α Castor
+        { x: 0.48, y: 0.52, r: 2.9, bright: true,  color: C.orange    }, // β Pollux
+        { x: 0.38, y: 0.59, r: 1.5, bright: false, color: C.white      },
+        { x: 0.44, y: 0.58, r: 1.5, bright: false, color: C.white      },
+        { x: 0.36, y: 0.65, r: 1.8, bright: false, color: C.yellow     }, // μ
+        { x: 0.42, y: 0.64, r: 1.5, bright: false, color: C.white      },
+        { x: 0.34, y: 0.71, r: 1.7, bright: true,  color: C.white      }, // η Tejat
+        { x: 0.40, y: 0.70, r: 1.5, bright: false, color: C.white      },
       ],
       lines: [[0,1],[0,2],[2,4],[4,6],[1,3],[3,5],[5,7]],
     },
@@ -195,26 +195,22 @@ var resizeDay = function () {};
   ────────────────────────────────────────── */
   const shooters = [];
   setInterval(() => {
-    // 30% 확률로 두 개 동시
-    const count = Math.random() < 0.3 ? 2 : 1;
-    for (let n = 0; n < count; n++) {
-      if (Math.random() < 0.78) {
-        const spread = (Math.random() - 0.5) * 0.8; // 방향 분산
-        const baseAngle = Math.PI / 4 + spread;      // 주로 좌상→우하
-        const speed = Math.random() * 0.006 + 0.003;
-        shooters.push({
-          x:     Math.random() * 0.80 + 0.05,
-          y:     Math.random() * 0.45,
-          vx:    Math.cos(baseAngle) * speed,
-          vy:    Math.sin(baseAngle) * speed,
-          life:  1,
-          decay: Math.random() * 0.010 + 0.005,
-          len:   Math.random() * 100 + 50,
-          width: Math.random() * 1.3 + 0.7,
-        });
-      }
+    if (Math.random() < 0.6) {
+      // 좌하→우상 방향 (내쪽에서 우주쪽으로)
+      const baseAngle = -Math.PI / 5 + (Math.random() - 0.5) * 0.5;
+      const speed = Math.random() * 0.004 + 0.002;
+      shooters.push({
+        x:     Math.random() * 0.3 + 0.05,       // 좌측에서 출발
+        y:     Math.random() * 0.3 + 0.55,        // 하단에서 출발
+        vx:    Math.cos(baseAngle) * speed,
+        vy:    Math.sin(baseAngle) * speed,
+        life:  1,
+        decay: Math.random() * 0.012 + 0.006,
+        len:   Math.random() * 40 + 20,           // 작게
+        width: Math.random() * 0.7 + 0.3,         // 가늘게
+      });
     }
-  }, 1400);
+  }, 2000);
 
   /* ──────────────────────────────────────────
      오로라 렌더링 — 안개처럼 형태가 바뀌며 사라지는 버전
@@ -227,8 +223,8 @@ var resizeDay = function () {};
      - screen 블렌드 → 별빛이 오로라 뒤로 비침
   ────────────────────────────────────────── */
   function drawAurora(t) {
-    const BASE  = H * 0.57;   // 오로라 기저선
-    const MAX_H = H * 0.52;   // 최대 높이
+    const BASE  = H * 0.48;   // 오로라 기저선 (텍스트~제목 사이)
+    const MAX_H = H * 0.40;   // 최대 높이
 
     // 5가지 시간 스케일로 분리된 컴포넌트
     const tXS = t * 0.000012; // 극히 느림 — 밴드 위치 자체 변화
