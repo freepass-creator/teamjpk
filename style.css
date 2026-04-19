@@ -65,14 +65,14 @@ nav.s {
   align-items: baseline;
 }
 .logo span { font-weight: 300; transition: color 0.4s; }
-.logo b    { font-weight: 600; margin-left: 4px; transition: color 0.4s; }
+.logo b    { font-weight: 600; transition: color 0.4s; }
 
 /* 히어로 위(어두운 배경)일 때 로고 색 */
 body.hv .logo span { color: rgba(255, 255, 255, 0.4); }
 body.hv .logo b    { color: rgba(255, 255, 255, 0.95); }
 /* 스크롤 후(밝은 배경)일 때 로고 색 */
 body:not(.hv) .logo span { color: #555; }
-body:not(.hv) .logo b    { color: var(--navy); }
+body:not(.hv) .logo b    { color: var(--main); }
 
 /* 네비 링크 */
 .nl {
@@ -152,6 +152,8 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   font-weight: 400;
   color: rgba(255, 255, 255, 0.95);
 }
+.br-d { display: inline; }
+@media (max-width: 768px) { .br-d { display: none; } }
 .hero-p {
   font-size: 15px;
   font-weight: 300;
@@ -355,7 +357,7 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   line-height: 1;
 }
 .hz-ci .lt { font-weight: 300; color: #555; }
-.hz-ci .bd { font-weight: 600; color: var(--navy); margin-left: 3px; }
+.hz-ci .bd { font-weight: 600; color: var(--navy); }
 
 .hz-desc { font-size: 13px; font-weight: 300; color: var(--text2); line-height: 1.8; }
 .hz-sub  { font-size: 12px; font-weight: 300; color: var(--text3); }
@@ -564,7 +566,7 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   line-height: 1;
 }
 .brand-name .lt { font-weight: 300; color: var(--text2); }
-.brand-name .bd { font-weight: 600; color: var(--navy); margin-left: 3px; }
+.brand-name .bd { font-weight: 600; color: var(--navy); }
 
 .brand-arrow {
   width: 18px; height: 18px;
@@ -825,7 +827,7 @@ footer { padding: 56px 0; border-top: 1px solid var(--line); }
 .ft-left {}
 .ft-logo { font-family: 'Exo 2', 'Pretendard', sans-serif; font-size: 15px; display: inline-flex; align-items: baseline; }
 .ft-logo span { font-weight: 300; color: var(--text3); }
-.ft-logo b    { font-weight: 600; color: var(--navy); opacity: 0.3; margin-left: 3px; }
+.ft-logo b    { font-weight: 600; color: var(--main); }
 .ft-tagline {
   font-size: 9.5px;
   font-weight: 300;
@@ -834,6 +836,13 @@ footer { padding: 56px 0; border-top: 1px solid var(--line); }
   color: var(--text3);
   opacity: 0.6;
   margin-top: 8px;
+}
+.ft-info {
+  font-size: 10px;
+  font-weight: 300;
+  color: var(--text3);
+  line-height: 1.8;
+  margin-top: 12px;
 }
 .ft-right { text-align: right; }
 .ft-cp { font-size: 10px; font-weight: 300; color: var(--text3); }
