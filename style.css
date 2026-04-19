@@ -129,7 +129,7 @@ body:not(.hv) .mb svg { stroke: var(--text2); }
   padding: 0 48px;
   width: 100%;
 }
-.hero-t { max-width: 440px; }
+.hero-t { max-width: 720px; }
 
 .hero-sub {
   font-size: 11px;
