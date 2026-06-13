@@ -159,6 +159,8 @@ img,svg,canvas{display:block}
 .foot{background:var(--panel);padding:56px 0 64px;color:var(--ink3);font-size:13.5px;line-height:1.95}
 .foot-logo{font-size:24px;margin-bottom:16px}.foot-logo .lt{font-weight:300;color:var(--ink2)}.foot-logo b{font-weight:600;color:var(--ink);margin-left:2px}
 .copy{font-size:12px;margin-top:10px}
+.foot-info .seg{white-space:nowrap}.foot-info .sep{color:var(--ink3);margin:0 5px}
+section{scroll-margin-top:78px}
 
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
