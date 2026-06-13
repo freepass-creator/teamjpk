@@ -76,7 +76,7 @@
     cx.font = "700 " + (m ? 22 : 28) + "px 'Exo 2', sans-serif";
     cx.textAlign = "center"; cx.textBaseline = "middle";
     cx.shadowColor = "rgba(120,160,255,.6)"; cx.shadowBlur = 7;
-    cx.fillText(navLabel, nx, ny + (m ? 44 : 96));
+    cx.fillText(navLabel, nx, ny + (m ? 66 : 112));
     cx.restore();
     cx.globalAlpha = 1;
   }
